@@ -42,7 +42,7 @@ public class PathFollowing : MonoBehaviour
         pathLength = path.Length;
         curPathIndex = 0;
 
-        //先转向
+        //先转向 
         velocity += Steer(targetPoint, false);
     }
     private void FindPath()
@@ -125,7 +125,7 @@ public class PathFollowing : MonoBehaviour
                 if (index < pathArray.Count)
                 {
                     Node nextNode = (Node)pathArray[index];
-                    Debug.DrawLine(node.position, nextNode.position, Color.black);
+                    Debug.DrawLine(node.position, nextNode.position, Color.blue);
                     index++;
                 }
             }
