@@ -3,7 +3,18 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Obstacle
+  - Start
+  - End
+  - Start1
+  - End1
+  - Start2
+  - Start_2_1
+  - Start2_2
+  - End3
+  - Start3
+  - Start_1
   layers:
   - Default
   - TransparentFX

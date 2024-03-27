@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class PathFollowing : MonoBehaviour
+public class path_test2 : MonoBehaviour
 {
-    public Path path=new Path();
+    public Path path = new Path();
     public float speed = 5.0f;
     public float mass = 5.0f;
     public bool isLooping = false;
@@ -16,12 +17,12 @@ public class PathFollowing : MonoBehaviour
 
     Vector3 velocity;
 
-    private Transform startPos, endPos;
-    public Node startNode { get; set; }
-    public Node goalNode { get; set; }
+    private Transform startPos1, endPos1;
+    public Node startNode1 { get; set; }
+    public Node goalNode1 { get; set; }
 
-    GameObject objStartNodeCube, objEndNodeCube;
-    public ArrayList pathArray;
+    GameObject objStartNodeCube1, objEndNodeCube1;
+    public ArrayList pathArray1;
     //设置时间范围   隔多久查找一次
     public float intervalTime = 1.0f;
     private float elapsedTime = 0.0f;
@@ -32,12 +33,12 @@ public class PathFollowing : MonoBehaviour
 
     void Start()
     {
-        objStartNodeCube = GameObject.FindGameObjectWithTag(this.gameObject.tag);
-        objEndNodeCube = GameObject.FindGameObjectWithTag("End");
-        pathArray = new ArrayList();
+        objStartNodeCube1 = GameObject.FindGameObjectWithTag(this.gameObject.tag);
+        objEndNodeCube1 = GameObject.FindGameObjectWithTag("End3");
+        pathArray1 = new ArrayList();
         FindPath();
 
-        path.SetPoints(pathArray);
+        path.SetPoints(pathArray1);
 
         pathLength = path.Length;
         curPathIndex = 0;
@@ -49,13 +50,13 @@ public class PathFollowing : MonoBehaviour
     {
 
         //变位置
-        startPos = objStartNodeCube.transform;
-        endPos = objEndNodeCube.transform;
+        startPos1 = objStartNodeCube1.transform;
+        endPos1 = objEndNodeCube1.transform;
 
         //变节点
-        startNode = new Node(GridManager.instance.GetGridCellCenter(GridManager.instance.GetGridIndex(startPos.position)));
-        goalNode = new Node(GridManager.instance.GetGridCellCenter(GridManager.instance.GetGridIndex(endPos.position)));
-        pathArray = AStar.FindPath(startNode, goalNode);
+        startNode1 = new Node(GridManager.instance.GetGridCellCenter(GridManager.instance.GetGridIndex(startPos1.position)));
+        goalNode1 = new Node(GridManager.instance.GetGridCellCenter(GridManager.instance.GetGridIndex(endPos1.position)));
+        pathArray1 = AStar.FindPath(startNode1, goalNode1);
     }
 
 
@@ -68,15 +69,15 @@ public class PathFollowing : MonoBehaviour
             elapsedTime = 0.0f;
             FindPath();
             curPathIndex = 0;
-            pathLength=pathArray.Count;
-            path.SetPoints(pathArray);
+            pathLength = pathArray1.Count;
+            path.SetPoints(pathArray1);
         }
 
 
         curspeed = speed * Time.deltaTime;
         targetPoint = path.GetPoint(curPathIndex);
 
-        if(Vector3.Distance(transform.position,targetPoint)<path.Radis)
+        if (Vector3.Distance(transform.position, targetPoint) < path.Radis)
         {
             if (curPathIndex < pathLength - 1)
                 curPathIndex++;
@@ -92,18 +93,17 @@ public class PathFollowing : MonoBehaviour
         if (curPathIndex >= pathLength - 1 && !isLooping)
             velocity += Steer(targetPoint, true);
         else
-            velocity += Steer(targetPoint,false);
+            velocity += Steer(targetPoint, false);
 
         transform.position += velocity;
         transform.rotation = Quaternion.LookRotation(velocity);
 
     }
-    public Vector3 Steer(Vector3 target,bool bFinalPoint)  //朝向
+    public Vector3 Steer(Vector3 target, bool bFinalPoint)  //朝向
     {
-        Vector3 desiredVelocity=(target - transform.position);
+        Vector3 desiredVelocity = (target - transform.position);
         float dist = desiredVelocity.magnitude;
         desiredVelocity.Normalize();   //单位化
-
         if (bFinalPoint && dist < 0.48f)
             Destroy(this.gameObject);
         else if (bFinalPoint && dist < 10.0f)
@@ -119,15 +119,15 @@ public class PathFollowing : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        if (pathArray == null) return;
-        if (pathArray.Count > 0)
+        if (pathArray1 == null) return;
+        if (pathArray1.Count > 0)
         {
             int index = 1;
-            foreach (Node node in pathArray)
+            foreach (Node node in pathArray1)
             {
-                if (index < pathArray.Count)
+                if (index < pathArray1.Count)
                 {
-                    Node nextNode = (Node)pathArray[index];
+                    Node nextNode = (Node)pathArray1[index];
                     Debug.DrawLine(node.position, nextNode.position, Color.green);
                     index++;
                 }
@@ -135,3 +135,4 @@ public class PathFollowing : MonoBehaviour
         }
     }
 }
+

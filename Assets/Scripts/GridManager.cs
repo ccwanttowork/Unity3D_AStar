@@ -51,7 +51,7 @@ public class GridManager : MonoBehaviour
 
         origin=this.transform.position;
 
-        //查找带有标签的红色方块位置并记为数组
+        //查找带有标签的黑色方块位置并记为数组
         obstacleList = GameObject.FindGameObjectsWithTag("Obstacle");
         CalculateObstacles();
 
